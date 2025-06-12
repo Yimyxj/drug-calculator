@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>药物剂量计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>药物剂量计算器</h1>
+    
+    <div class="input-group">
+        <label for="weight">患者体重 (kg)</label>
+        <input type="number" id="weight" placeholder="请输入体重(kg)">
+    </div>
+    
+    <div class="input-group">
+        <label for="dosage">药物用量 (mg/kg)</label>
+        <input type="number" id="dosage" placeholder="请输入用量(mg/kg)">
+    </div>
+    
+    <button onclick="calculate()">计算</button>
+    
+    <div id="result" class="result">
+        <p>所需药物剂量: <span id="drugResult" class="result-value">0</span> mg</p>
+        <p>所需液体量: <span id="liquidResult" class="result-value">0</span> ml</p>
+    </div>
+
+    <script>
+        function calculate() {
+            // 获取输入值
+            const weight = parseFloat(document.getElementById('weight').value);
+            const dosage = parseFloat(document.getElementById('dosage').value);
+            
+            // 验证输入
+            if (isNaN(weight) || isNaN(dosage) || weight <= 0 || dosage <= 0) {
+                alert("请输入有效的体重和用量值");
+                return;
+            }
+            
+            // 计算药物剂量
+            const drugAmount = weight * dosage;
+            
+            // 计算液体量
+            const liquidAmount = drugAmount / 500;
+            
+            // 显示结果
+            document.getElementById('drugResult').textContent = drugAmount.toFixed(2);
+            document.getElementById('liquidResult').textContent = liquidAmount.toFixed(2);
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
